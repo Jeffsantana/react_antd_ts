@@ -15,19 +15,19 @@ const CommonLayout: React.FC<Props> = ({ children, sidebar: Sidebar }) => {
         <SearchBar />
       </Header>
       <Layout>
+        {Sidebar && <Sidebar />}
         {/* <Layout> */}
-        <Sidebar />
         <Content>
           <Wrapper>{children}</Wrapper>
         </Content>
-        <Footer>
-          <span>
-            Created by @
-            <a href="https://criatech.me"> Criatech Soluções</a>
-          </span>
-        </Footer>
-        {/* </Layout> */}
       </Layout>
+      <Footer>
+        <span>
+          Created by @
+          <a href="https://criatech.me"> Criatech Soluções</a>
+        </span>
+      </Footer>
+      {/* </Layout> */}
     </Layout>
   );
 };

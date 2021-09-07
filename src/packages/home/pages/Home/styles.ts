@@ -8,12 +8,13 @@ export const Container = styled.div`
   align-items: center;
   p {
     font-size: 2em;
+    padding: 1em;
   }
 
   > div {
     display: flex;
     /* padding:24px; */
-    justify-content: space-between;
+    justify-content: center;
     height: 350px;
     width: 50%;
 

@@ -7,7 +7,7 @@ export const Container = styled(SiderContainer)`
   padding-top: 60px;
   position: relative;
 
-  div {
+  > div {
     width: 200px;
     position: fixed;
   }
