@@ -1,0 +1,35 @@
+import React from 'react';
+import { Layout } from 'antd';
+import SearchBar from '../SearchBar';
+
+import { Wrapper, Header, Content, Footer } from './styles';
+
+interface Props {
+  sidebar?: any;
+}
+
+const CommonLayout: React.FC<Props> = ({ children, sidebar: Sidebar }) => {
+  return (
+    <Layout>
+      <Header>
+        <SearchBar />
+      </Header>
+      <Layout>
+        {/* <Layout> */}
+        <Sidebar />
+        <Content>
+          <Wrapper>{children}</Wrapper>
+        </Content>
+        <Footer>
+          <span>
+            Created by @
+            <a href="https://criatech.me"> Criatech Soluções</a>
+          </span>
+        </Footer>
+        {/* </Layout> */}
+      </Layout>
+    </Layout>
+  );
+};
+
+export default CommonLayout;
