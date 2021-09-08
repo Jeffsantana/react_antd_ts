@@ -10,7 +10,10 @@ import {
   Breadcrumb,
   Button,
   Tooltip,
+  Input,
+  Space
 } from 'antd';
+
 import {
   HomeOutlined,
   UserOutlined,
@@ -28,6 +31,7 @@ import { Container, Header, BoxAction } from './styles';
 import useFetch from '../../../../hooks/useFetchMemo';
 
 const { Option } = Select;
+const { Search } = Input
 interface UserState {
   _id: string;
   active?: boolean;
@@ -149,6 +153,7 @@ const Users: React.FC = () => {
     },
     [pokaYoke, handleDeleteUser],
   );
+  const onSearch = (event: any) => console.log(event);
 
   return (
     <Container>
@@ -165,6 +170,7 @@ const Users: React.FC = () => {
             <span>Usuários</span>
           </Breadcrumb.Item>
         </Breadcrumb>
+        <Search placeholder="input search text" onSearch={onSearch} enterButton />
         <Tooltip title="Adicionar um novo usuário" placement="left">
           <Button
             type="primary"

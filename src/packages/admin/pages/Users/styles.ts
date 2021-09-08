@@ -24,14 +24,3 @@ export const BoxAction = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-export const MyTable = styled.div`
-  
-  padding: 0 5% 0 5%;
-  /* width: 90%; */
-  /* display: flex;  */
-  /* align-content: center; */
-  /* align-items: center; */
-  /* justify-content: center; */
-
-`;
