@@ -39,11 +39,11 @@ const UserEdit: React.FC = () => {
 
   const profiles = useMemo(
     () => [
-      { label: 'ADM', value: 'ADM' },
-      { label: 'CTM', value: 'CTM' },
-      { label: 'ENG', value: 'ENG' },
-      { label: 'MNT', value: 'MNT' },
-      { label: 'OPR', value: 'OPR' },
+      // { label: 'ADM', value: 'ADM' },
+      // { label: 'CTM', value: 'CTM' },
+      // { label: 'ENG', value: 'ENG' },
+      // { label: 'MNT', value: 'MNT' },
+      // { label: 'OPR', value: 'OPR' },
       { label: 'TI', value: 'TI' },
     ],
     [],
@@ -65,9 +65,9 @@ const UserEdit: React.FC = () => {
         await schema.validate(data, { abortEarly: false });
 
         if (id === 'new') {
-          await api.post('/users', data);
+          await api.post('/user', data);
         } else {
-          await api.put(`/users/${id}`, data);
+          await api.put(`/user/${id}`, data);
         }
 
         history.goBack();
@@ -97,9 +97,11 @@ const UserEdit: React.FC = () => {
   useEffect(() => {
     async function loadUser() {
       if (id !== 'new') {
-        const response = await api.get(`/users/${id}`);
+        const response = await api.get(`/user/${id}`);
+        console.log("🚀 ~ response", response);
         const { name, email, profile } = response.data;
-        if (response.status) {
+        console.log("🚀 ~ name", name);
+        if (response) {
           formRef.current?.setFieldValue('name', name);
           formRef.current?.setFieldValue('email', email);
           formRef.current?.setFieldValue('profile', {

@@ -9,11 +9,21 @@ const api = axios.create({
   baseURL,
 });
 
-// localStorage.setItem('MyApp@token', token);
-axios.interceptors.request.use(function (config) {
-  config.headers.Authorization = 'Bearer ' + localStorage.getItem('MyApp@token')
+const token = localStorage.getItem('MyApp@token');
+
+
+api.interceptors.request.use(config => {
+  config.headers['Content-Type'] = 'application/json';
+  if (token) {
+    config.headers['Authorization'] = 'Bearer ' + token
+  }
+
+  console.log("🚀 ~ config", config);
   return config;
 });
+
+// axios.interceptors
+
 
 export default api;
 

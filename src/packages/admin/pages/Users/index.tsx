@@ -123,10 +123,12 @@ const Users: React.FC = () => {
 
   const handleDeleteUser = useCallback(
     async (user_id: string) => {
-      api.delete(`/users/${user_id}`);
+      api.delete(`/user/${user_id}`);
 
-      const usersUpdated = data?.docs?.filter(user => user._id !== user_id);
+      const usersUpdatedDocs = data?.docs?.filter(user => user._id !== user_id);
+      const usersUpdated = { ...data, docs: { ...usersUpdatedDocs } }
 
+      console.log("🚀 ~ usersUpdated", usersUpdated);
       // mutate(usersUpdated, false);
       addToast({
         type: 'success',
