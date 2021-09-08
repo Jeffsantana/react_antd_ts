@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Menu } from 'antd';
+import { Menu, Layout } from 'antd';
 import {
   UserOutlined,
   LayoutOutlined,
@@ -9,6 +9,8 @@ import {
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Container } from './styles';
+const { Sider: SiderContainer } = Layout;
+
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [route, setRoute] = useState(window.location.pathname);
@@ -23,14 +25,18 @@ const Sidebar: React.FC = () => {
   );
 
   return (
-    <Container
+    <SiderContainer
       collapsible
       draggable
       collapsed={collapsed}
       onCollapse={() => setCollapsed(!collapsed)}
+      // theme="light"
+      style={{
+        paddingTop: '100px'
+      }}
     >
       <Menu
-        // className="menu"
+        className="menu"
         defaultSelectedKeys={[route.toString()]}
         mode="inline"
         theme="dark"
@@ -75,7 +81,7 @@ const Sidebar: React.FC = () => {
 
 
       </Menu>
-    </Container>
+    </SiderContainer >
   );
 };
 
