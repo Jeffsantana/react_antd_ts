@@ -23,7 +23,7 @@ import api from '../../../../services/api';
 import { useToast } from '../../../../hooks/toast';
 import { usePokaYoke } from '../../../../hooks/pokayoke';
 
-import { Container, Header, BoxAction, MyTable } from './styles';
+import { Container, Header, BoxAction } from './styles';
 
 import useFetch from '../../../../hooks/useFetchMemo';
 
@@ -55,7 +55,6 @@ interface UserDocs {
 
 
 const Users: React.FC = () => {
-  console.log("🚀 ~ MyTable", MyTable);
   const { data, mutate } = useFetch<UserDocs>('/user');
   const [pageSize, setPageSize] = useState<number>(10);
   const { pokaYoke, closePokaYoke } = usePokaYoke();
