@@ -158,7 +158,9 @@ const Users: React.FC = () => {
   return (
     <Container>
       <Header>
-        <Breadcrumb>
+        <Breadcrumb
+          style={{ width: '14%', background: '' }}
+        >
           <Breadcrumb.Item
             href=""
             onClick={() => push(`${defaultRoutes.admin}`)}
@@ -166,15 +168,21 @@ const Users: React.FC = () => {
             <HomeOutlined />
           </Breadcrumb.Item>
           <Breadcrumb.Item href="">
-            <UserOutlined />
             <span>Usuários</span>
+            <span> </span>
+            <UserOutlined />
           </Breadcrumb.Item>
         </Breadcrumb>
-        <Search placeholder="input search text" onSearch={onSearch} enterButton />
+        <Search
+          placeholder="Pesquisar"
+          style={{ padding: '0 0 0 0', width: '56%' }}
+          onSearch={onSearch}
+          enterButton />
+
         <Tooltip title="Adicionar um novo usuário" placement="left">
           <Button
             type="primary"
-            style={{ background: '#001529' }}
+            style={{ width: '14%', background: '#001529' }}
             onClick={() => push(`${defaultRoutes.admin}/users/new`)}
           >
             Adicionar
