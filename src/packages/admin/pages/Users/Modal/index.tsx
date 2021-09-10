@@ -39,7 +39,7 @@ const UserEdit: React.FC = () => {
 
   const profiles = useMemo(
     () => [
-      // { label: 'ADM', value: 'ADM' },
+      { label: 'ADM', value: 'ADM' },
       // { label: 'CTM', value: 'CTM' },
       // { label: 'ENG', value: 'ENG' },
       // { label: 'MNT', value: 'MNT' },
@@ -98,9 +98,7 @@ const UserEdit: React.FC = () => {
     async function loadUser() {
       if (id !== 'new') {
         const response = await api.get(`/user/${id}`);
-        console.log("🚀 ~ response", response);
         const { name, email, profile } = response.data;
-        console.log("🚀 ~ name", name);
         if (response) {
           formRef.current?.setFieldValue('name', name);
           formRef.current?.setFieldValue('email', email);

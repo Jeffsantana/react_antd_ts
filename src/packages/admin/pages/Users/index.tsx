@@ -44,17 +44,17 @@ interface UserState {
 
 }
 interface UserDocs {
-  docs: UserState[],
-  totalDocs: number;
-  offset: string;
-  limit: string;
-  totalPages: number;
-  page: string;
-  pagingCounter: string;
-  hasPrevPage: boolean;
-  hasNextPage: boolean;
-  prevPage: boolean;
-  nextPage: boolean;
+  docs?: UserState[],
+  totalDocs?: number;
+  offset?: string;
+  limit?: string;
+  totalPages?: number;
+  page?: string;
+  pagingCounter?: string;
+  hasPrevPage?: boolean;
+  hasNextPage?: boolean;
+  prevPage?: boolean;
+  nextPage?: boolean;
 }
 
 
@@ -101,7 +101,7 @@ const Users: React.FC = () => {
           <Menu>
             <Menu.Item
               key="0"
-              onClick={() => push(`${defaultRoutes.admin}/user/${_id}`)}
+              onClick={() => push(`${defaultRoutes.admin}/users/${_id}`)}
             >
               <span>Editar</span>
             </Menu.Item>
@@ -129,11 +129,12 @@ const Users: React.FC = () => {
     async (user_id: string) => {
       api.delete(`/user/${user_id}`);
 
-      const usersUpdatedDocs = data?.docs?.filter(user => user._id !== user_id);
-      const usersUpdated = { ...data, docs: { ...usersUpdatedDocs } }
-
-      console.log("🚀 ~ usersUpdated", usersUpdated);
-      // mutate(usersUpdated, false);
+      const usersUpdatedDocs: UserState[] = data?.docs?.filter(user => user._id !== user_id) ?? [];
+      const mongooseElements = { ...data };
+      mongooseElements.docs = usersUpdatedDocs;
+      mongooseElements.totalDocs = mongooseElements.totalDocs ? mongooseElements.totalDocs - 1 : 0;
+      const usersUpdated: UserDocs = { ...mongooseElements } ?? [];
+      mutate(usersUpdated, false);
       addToast({
         type: 'success',
         title: 'Usuário removido com sucesso',
@@ -153,8 +154,12 @@ const Users: React.FC = () => {
     },
     [pokaYoke, handleDeleteUser],
   );
-  const onSearch = (event: any) => console.log(event);
 
+  const onSearch = (search: any) => {
+    console.log(search.length);
+
+
+  }
   return (
     <Container>
       <Header>
@@ -201,23 +206,11 @@ const Users: React.FC = () => {
           total: data ? data.totalDocs : 0,
           defaultPageSize: 4,
           showTotal: (total: number) => { return `Total ${total} itens` },
-          // showTotal: () => {
-          //   return (
-          //     <div className="page-size">
-          //       Itens por pagina:
-          //       <Select
-          //         defaultValue="10"
-          //         style={{ width: 120 }}
-          //         onChange={value => setPageSize(parseInt(value, 10))}
-          //       >
-          //         <Option value="10">10</Option>
-          //         <Option value="20">20</Option>
-          //         <Option value="50">50</Option>
-          //         <Option value="100">100</Option>
-          //       </Select>
-          //     </div>
-          //   );
-          // },
+          itemRender: (current, type, originalElement) => {
+
+            return originalElement
+          },
+
         }}
         onRow={(record: { _id: string }) => {
           return {
