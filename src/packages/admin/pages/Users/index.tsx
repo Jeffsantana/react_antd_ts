@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { AxiosRequestConfig, AxiosError } from 'axios';
 
 import {
   Table,
@@ -10,8 +11,7 @@ import {
   Breadcrumb,
   Button,
   Tooltip,
-  Input,
-  Space
+  Input
 } from 'antd';
 
 import {
@@ -29,8 +29,9 @@ import { usePokaYoke } from '../../../../hooks/pokayoke';
 import { Container, Header, BoxAction } from './styles';
 
 import useFetch from '../../../../hooks/useFetchMemo';
+// import useFetch from '../../../../hooks/useFetch';
 
-const { Option } = Select;
+// const { Option } = Select;
 const { Search } = Input
 interface UserState {
   _id: string;
@@ -56,15 +57,37 @@ interface UserDocs {
   prevPage?: boolean;
   nextPage?: boolean;
 }
+interface Params {
+  search: string;
+}
+
 
 
 const Users: React.FC = () => {
-  const { data, mutate } = useFetch<UserDocs>('/user');
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [loading, setLoading] = useState(false)
+  const { search } = useParams<Params>()
+  const { data, mutate } = useFetch<UserDocs>('/user', { params: { search } });
+
+  // const [pageSize, setPageSize] = useState<number>(10);
   const { pokaYoke, closePokaYoke } = usePokaYoke();
   const { addToast } = useToast();
 
   const { push } = useHistory();
+  const myRequest = async (url: string, options?: AxiosRequestConfig) => {
+    console.log("🚀 ~ myRequest");
+
+    setLoading(true);
+    const res = await api(url, options);
+    // res.data ? setLoading(!loading) : addToast({
+    //   type: 'error',
+    //   title: res.statusText,
+    // });
+    const usersUpdatedDocs: UserDocs = res.data
+    // console.log("🚀 ~ loading true  ", loading);
+    setLoading(false);
+    // console.log("🚀 ~ loading false", loading);
+    mutate(usersUpdatedDocs, false)
+  }
 
   const columns = [
     {
@@ -155,11 +178,16 @@ const Users: React.FC = () => {
     [pokaYoke, handleDeleteUser],
   );
 
-  const onSearch = (search: any) => {
-    console.log(search.length);
+  const handleSearch = async (search: string) => {
+    const usersUpdatedDocs = await myRequest('user', { params: { search } })
+  };
+
+  const handlePagination = async (page: any) => {
+    const usersUpdatedDocs = await myRequest('user', { params: { page } })
+    // mutate(usersUpdatedDocs, false)
+  };
 
 
-  }
   return (
     <Container>
       <Header>
@@ -181,14 +209,14 @@ const Users: React.FC = () => {
         <Search
           placeholder="Pesquisar"
           style={{ padding: '0 0 0 0', width: '56%' }}
-          onSearch={onSearch}
+          onSearch={handleSearch}
           enterButton />
 
         <Tooltip title="Adicionar um novo usuário" placement="left">
           <Button
             type="primary"
             style={{ width: '14%', background: '#001529' }}
-            onClick={() => push(`${defaultRoutes.admin}/users/new`)}
+            onClick={() => push(`${defaultRoutes.admin}/user/new`)}
           >
             Adicionar
           </Button>
@@ -196,19 +224,20 @@ const Users: React.FC = () => {
       </Header>
       <Table
         dataSource={data?.docs}
-        loading={!data}
+        loading={!data || loading}
         columns={columns}
         style={{ padding: '0 4% 0 4%' }}
         pagination={{
-          // showSizeChanger: false,
-          // pageSize,
           defaultCurrent: 1,
           total: data ? data.totalDocs : 0,
-          defaultPageSize: 4,
+          defaultPageSize: 1,
           showTotal: (total: number) => { return `Total ${total} itens` },
-          itemRender: (current, type, originalElement) => {
+          onChange: (page: number, pageSize?: number | undefined) => {
+            handlePagination(page)
 
-            return originalElement
+          },
+          itemRender: (current, type, originalElement) => {
+            return originalElement;
           },
 
         }}
@@ -216,7 +245,7 @@ const Users: React.FC = () => {
           return {
             onDoubleClick: () => {
               if (record) {
-                push(`${defaultRoutes.admin}/users/${record._id}`);
+                push(`${defaultRoutes.admin}/user/${record._id}`);
               }
             },
           };

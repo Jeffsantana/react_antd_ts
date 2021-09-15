@@ -21,7 +21,7 @@ function useFetch<T = any>(url: string, options?: AxiosRequestConfig) {
     })();
   }, [url, options]);
 
-  return { response, loading, error };
+  return { response, loading, error, mutate: {} };
 }
 
 export default useFetch;

@@ -36,7 +36,7 @@ const Routes: React.FC = () => {
   return (
     <Switch>
       <AdminRoute path={`${baseURL}`} exact component={AdminHome} />
-      <AdminRoute path={`${baseURL}/users`} exact component={Users} />
+      <AdminRoute path={`${baseURL}/users/:search?`} exact component={Users} />
       <AdminRoute path={`${baseURL}/providers`} exact component={Providers} />
       <AdminRoute
         path={`${baseURL}/manufacturers`}
@@ -52,7 +52,7 @@ const Routes: React.FC = () => {
       />
       <AdminRoute path={`${baseURL}/operators/:id`} component={OperatorEdit} />
 
-      <AdminRoute path={`${baseURL}/users/:id`} component={UserEdit} />
+      <AdminRoute path={`${baseURL}/user/:id`} component={UserEdit} />
       <Route path={`${baseURL}/*`} component={Error404} />
     </Switch>
   );

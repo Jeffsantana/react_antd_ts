@@ -18,6 +18,7 @@ import { InputGroup } from '../../../../../styles/Forms';
 
 interface Params {
   id: string;
+  search: string;
 }
 
 interface OptionSelect {
@@ -35,7 +36,9 @@ const UserEdit: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
-  const { id } = useParams<Params>();
+  const { id, search } = useParams<Params>();
+  console.log("🚀 ~ id", id);
+  console.log("🚀 ~ search", search);
 
   const profiles = useMemo(
     () => [
