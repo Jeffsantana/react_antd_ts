@@ -4,10 +4,13 @@ import { Switch } from 'react-router-dom';
 /*
   A nagevação consiste em 3 tipos de navegação:
   - PrivateRoutes - São rotas privadas que exigem o usuário estar
-  autenticado e renderiza o Menu lateral, caso o usuário não esteja autenticado
+  autenticado e renderiza o Menu lateral, 
+  caso o usuário não esteja autenticado
   a rota irá redirecioná-lo para rota de login
+  
   - GuestRoute - São rotas que só devem ser usadas quando o usuário não está
   logado, exemplo: rotas de Login, Cadastro e Recuperar senha
+  
   - Route são rotas pública (Deve ser importado do react-router-dom), devem ser
   rotas usadas em: página de apresentação, páginas de termos de uso e etc.
 */
@@ -24,6 +27,7 @@ import HomeRoutes from '../packages/home/routes'
 
 import Error403 from '../pages/Error403';
 import Error404 from '../pages/Error404';
+import MyProfile from '../components/Profile/MyProfile';
 
 const Routes: React.FC = () => {
   return (

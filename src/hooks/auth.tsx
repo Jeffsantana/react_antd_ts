@@ -7,7 +7,7 @@ interface Credentials {
 }
 
 interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   profile: string;
@@ -18,6 +18,7 @@ interface AuthContextData {
   signed: boolean;
   signIn(credentials: Credentials): Promise<void>;
   signOut(): void;
+  revivalAuth(): void;
 }
 
 interface AuthState {
@@ -37,7 +38,19 @@ const AuthProvider: React.FC = ({ children }) => {
     }
     return {} as AuthState;
   });
+  const revivalAuth = useCallback(async () => {
 
+    const toUser = localStorage.getItem('MyApp@user');
+    const token = localStorage.getItem('MyApp@token');
+    if (toUser && token) {
+      const user = JSON.parse(toUser);
+      const response = await api.get(`/user/${user._id}`);
+      const newUser = response.data;
+      localStorage.setItem('MyApp@user', JSON.stringify(newUser));
+      setData({ token, user: newUser });
+
+    }
+  }, [])
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('/login', { email, password });
     const { user, token } = response.data;
@@ -57,7 +70,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signed: !!data.user, signIn, signOut }}
+      value={{ user: data.user, signed: !!data.user, signIn, signOut, revivalAuth }}
     >
       {children}
     </AuthContext.Provider>
@@ -73,5 +86,6 @@ function useAuth(): AuthContextData {
 
   return context;
 }
+
 
 export { AuthProvider, useAuth };

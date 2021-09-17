@@ -68,24 +68,17 @@ const Users: React.FC = () => {
   const { search } = useParams<Params>()
   const { data, mutate } = useFetch<UserDocs>('/user', { params: { search } });
 
-  // const [pageSize, setPageSize] = useState<number>(10);
+
   const { pokaYoke, closePokaYoke } = usePokaYoke();
   const { addToast } = useToast();
 
   const { push } = useHistory();
   const myRequest = async (url: string, options?: AxiosRequestConfig) => {
-    console.log("🚀 ~ myRequest");
 
     setLoading(true);
     const res = await api(url, options);
-    // res.data ? setLoading(!loading) : addToast({
-    //   type: 'error',
-    //   title: res.statusText,
-    // });
     const usersUpdatedDocs: UserDocs = res.data
-    // console.log("🚀 ~ loading true  ", loading);
     setLoading(false);
-    // console.log("🚀 ~ loading false", loading);
     mutate(usersUpdatedDocs, false)
   }
 
@@ -179,12 +172,12 @@ const Users: React.FC = () => {
   );
 
   const handleSearch = async (search: string) => {
-    const usersUpdatedDocs = await myRequest('user', { params: { search } })
+    await myRequest('user', { params: { search } })
   };
 
   const handlePagination = async (page: any) => {
-    const usersUpdatedDocs = await myRequest('user', { params: { page } })
-    // mutate(usersUpdatedDocs, false)
+    await myRequest('user', { params: { page } })
+
   };
 
 

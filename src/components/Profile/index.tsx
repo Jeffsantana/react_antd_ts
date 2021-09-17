@@ -5,13 +5,14 @@ import { Avatar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 import userPreview from '../../assets/user.jpg';
-import ConstantsRoute from '../../config/routes/ConstantsRoutes';
+import defaultRoutes from '../../config/routes/defaultRoutes';
 
 import { useAuth } from '../../hooks/auth';
 
 import { Container, Button, Menu, MenuItem } from './styles';
 
 const Profile: React.FC = () => {
+
   const { user, signOut } = useAuth();
   const history = useHistory();
 
@@ -55,7 +56,7 @@ const Profile: React.FC = () => {
       <Menu ref={refMenu} visible={visible}>
         <MenuItem
           onClick={() => {
-            history.push(ConstantsRoute.myProfile);
+            history.push(`${defaultRoutes.home}/me`);
           }}
         >
           <FiUser size={20} />
