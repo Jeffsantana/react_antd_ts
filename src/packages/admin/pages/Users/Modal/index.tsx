@@ -43,7 +43,7 @@ const UserEdit: React.FC = () => {
   const profiles = useMemo(
     () => [
       { label: 'ADM', value: 'ADM' },
-      // { label: 'CTM', value: 'CTM' },
+      { label: 'USER', value: 'USER' },
       // { label: 'ENG', value: 'ENG' },
       // { label: 'MNT', value: 'MNT' },
       // { label: 'OPR', value: 'OPR' },
