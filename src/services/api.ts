@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export const baseURL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:4500/'
@@ -19,7 +18,15 @@ api.interceptors.request.use(config => {
   }
   return config;
 });
+api.interceptors.response.use(function (response) {
 
+  return response;
+}, function (error) {
+  console.log("🚀 ~ error", error);
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error);
+});
 // axios.interceptors
 
 

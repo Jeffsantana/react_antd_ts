@@ -13,10 +13,3 @@ export const Header = styled.div`
   /* padding: 8px; */
   padding: 2%;
 `;
-
-export const BoxAction = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

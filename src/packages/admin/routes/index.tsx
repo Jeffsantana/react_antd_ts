@@ -14,6 +14,7 @@ import Operators from '../pages/Operators';
 import ProviderEdit from '../pages/Providers/Modal';
 import ManufacturerEdit from '../pages/Manufacturers/Modal';
 import OperatorEdit from '../pages/Operators/OperatorEdit';
+import QrCodeDownload from '../pages/QrCode';
 
 /*
   A nagevação consiste em 3 tipos de navegação:
@@ -37,6 +38,9 @@ const Routes: React.FC = () => {
     <Switch>
       <AdminRoute path={`${baseURL}`} exact component={AdminHome} />
       <AdminRoute path={`${baseURL}/users/:search?`} exact component={Users} />
+
+      <AdminRoute path={`${baseURL}/qrcode`} component={QrCodeDownload} />
+
       <AdminRoute path={`${baseURL}/providers`} exact component={Providers} />
       <AdminRoute
         path={`${baseURL}/manufacturers`}

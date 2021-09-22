@@ -37,8 +37,7 @@ const UserEdit: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
   const { id, search } = useParams<Params>();
-  console.log("🚀 ~ id", id);
-  console.log("🚀 ~ search", search);
+
 
   const profiles = useMemo(
     () => [

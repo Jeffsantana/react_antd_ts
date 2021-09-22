@@ -8,7 +8,8 @@ import {
   SolutionOutlined,
 } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import { Container } from './styles';
+import { saveAs } from 'file-saver';
+import api from '../../../../services/api';
 const { Sider: SiderContainer } = Layout;
 
 const Sidebar: React.FC = () => {
@@ -23,6 +24,19 @@ const Sidebar: React.FC = () => {
     },
     [history],
   );
+  const downloadPdf = useCallback(async () => {
+
+    const response = await api.get(`/generate_qrcode`, {
+      responseType: 'blob',
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment',
+      },
+    })
+    const objectUrl = window.URL.createObjectURL(response.data);
+    window.open(objectUrl, '_blank');
+    window.URL.revokeObjectURL(objectUrl);
+  }, [])
 
   return (
     <SiderContainer
@@ -76,6 +90,14 @@ const Sidebar: React.FC = () => {
           icon={<SolutionOutlined />}
         >
           Operadores
+        </Menu.Item>
+        <Menu.Item
+          key="/admin/qrcode"
+          // onClick={() => downloadPdf()}
+          onClick={() => history.push('/admin/qrcode')}
+          icon={<SolutionOutlined />}
+        >
+          QrCode Download
         </Menu.Item>
 
 

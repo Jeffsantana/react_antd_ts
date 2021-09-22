@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { AxiosRequestConfig, AxiosError } from 'axios';
@@ -29,9 +29,7 @@ import { usePokaYoke } from '../../../../hooks/pokayoke';
 import { Container, Header, BoxAction } from './styles';
 
 import useFetch from '../../../../hooks/useFetchMemo';
-// import useFetch from '../../../../hooks/useFetch';
 
-// const { Option } = Select;
 const { Search } = Input
 interface UserState {
   _id: string;
@@ -60,8 +58,6 @@ interface UserDocs {
 interface Params {
   search: string;
 }
-
-
 
 const Users: React.FC = () => {
   const [loading, setLoading] = useState(false)
